@@ -26,7 +26,7 @@ class Server:
         connection.send(pickle.dumps(data))
 
     def recv(self, connection, size = 1024):
-        return pickle.dumps(connection.recv(size))
+        return pickle.loads(connection.recv(size))
 
     def destroy(self):
         self.server.close()
