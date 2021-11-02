@@ -1,27 +1,22 @@
 from socket import *
 
-client = socket(AF_INET, SOCK_STREAM)
+import pickle
 
 class Client:
-    def __init__(self, ip = gethostbyname(gethostname()), port = None, size = 1024, format = "utf-8"):
+    def __init__(self, ip, port):
+        self.client = socket(AF_INET, SOCK_STREAM)
+
         self.ip = ip
         self.port = port
-        self.size = size
-        self.format = format
 
     def connect(self):
-        address = (self.ip, self.port)
-        client.connect(address)
+        self.client.connect((self.ip, self.port))
 
     def send(self, data):
-        client.send(data.encode(self.format))
+        self.client.send(pickle.dumps(data))
 
-    def recv(self):
-        reply = client.recv(self.size).decode()
+    def recv(self, size = 1024):
+        return pickle.loads(self.client.recv(size))
 
-        return reply
-
-    def get_local_ip(self):
-        ip = gethostbyname(gethostname())
-
-        return ip
+    def destroy(self):
+        self.client.close()

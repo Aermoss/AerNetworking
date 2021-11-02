@@ -21,10 +21,7 @@ def handler(connection, address): # this function will be run on the new connect
 
     server.send(connection = connection, data = message) # this will send message to connection
 
-server = Server()
-
-server.ip = server.get_local_ip()
-server.port = 5656
+server = Server(ip = get_local_ip(), port = 5656)
 
 server.listen(function = handler) # this will starts the server
 ```
@@ -33,10 +30,7 @@ server.listen(function = handler) # this will starts the server
 ``` python
 from aernetworking import * # this will import everything we need from AerNetworking with just one line.
 
-client = Client()
-
-client.ip = client.get_local_ip()
-client.port = 5656
+client = Client(ip = get_local_ip(), port = 5656)
 
 client.connect() # this is for connecting the server
 
